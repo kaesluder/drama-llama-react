@@ -1,23 +1,27 @@
+import { useEffect, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
+import Item from './components/Item';
+import { getFeedData } from './LlamaAPI';
+import FeedList from './components/FeedList';
 
 function App() {
+  const [feedsStatus, setFeedsStatus] = useState([]);
+  const [errorStatus, setErrorStatus] = useState();
+
+  useEffect(() => {
+    getFeedData()
+      .then((response) => {
+        setFeedsStatus(response.data);
+      })
+      .catch((response) => setErrorStatus(`Error fetching feeds: ${response}`));
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -38,9 +42,9 @@ function App() {
               </Typography>
             </Toolbar>
           </AppBar>
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             <Grid item xs={4}>
-              <Item>xs=4</Item>
+              <FeedList feedsStatus={feedsStatus}></FeedList>
             </Grid>
             <Grid item xs={8}>
               <Item>xs=8</Item>
