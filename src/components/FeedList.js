@@ -12,10 +12,14 @@ import DraftsIcon from '@mui/icons-material/Drafts';
 
 const FeedItem = function (feed) {
   return (
-    <ListItem disablePadding>
-      <RssFeed />
-      <ListItemText primary={feed['title']} />
-    </ListItem>
+    <ListItemButton>
+      <ListItem disablePadding>
+        <ListItemIcon>
+          <RssFeed />
+        </ListItemIcon>
+        <ListItemText primary={feed['title']} />
+      </ListItem>
+    </ListItemButton>
   );
 };
 
