@@ -10,21 +10,33 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import RssFeed from '@mui/icons-material/RssFeed';
 import DraftsIcon from '@mui/icons-material/Drafts';
 
-const FeedItem = function (feed) {
+const FeedItem = function (props) {
   return (
-    <ListItemButton>
+    <ListItemButton
+      onClick={(e) => props.handleSelect(props.feed['dl_feed_id'])}
+    >
       <ListItem disablePadding>
         <ListItemIcon>
           <RssFeed />
         </ListItemIcon>
-        <ListItemText primary={feed['title']} />
+        <ListItemText primary={props.feed['title']} />
       </ListItem>
     </ListItemButton>
   );
 };
 
 const FeedList = function (props) {
-  return <List>{props.feedsStatus.map(FeedItem)}</List>;
+  const feeds = props.feedsStatus.map((f) => {
+    return (
+      <FeedItem
+        feed={f}
+        handleSelect={props.handleFeedSelect}
+        key={f.dl_feed_id}
+      ></FeedItem>
+    );
+  });
+
+  return <List>{feeds}</List>;
 };
 
 export default FeedList;

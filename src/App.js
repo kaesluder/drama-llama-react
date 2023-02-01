@@ -6,13 +6,25 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Grid from '@mui/material/Grid';
-import Item from './components/Item';
-import { getFeedData } from './LlamaAPI';
+import { getFeedData, getEntriesForFeed } from './LlamaAPI';
 import FeedList from './components/FeedList';
+import ItemList from './components/ItemList';
 
 function App() {
   const [feedsStatus, setFeedsStatus] = useState([]);
   const [errorStatus, setErrorStatus] = useState();
+  const [itemsStatus, setItemsStatus] = useState([]);
+  const [selectedFeedStatus, setSelectedFeedStatus] = useState();
+
+  const handleFeedSelect = function (feedID) {
+    setSelectedFeedStatus(feedID);
+    console.log(`handleFeedSelect ${feedID}`);
+    getEntriesForFeed(feedID)
+      .then((response) => setItemsStatus(response.data))
+      .catch((response) =>
+        setErrorStatus(`Error fetching items for ${feedID}: ${response}`)
+      );
+  };
 
   useEffect(() => {
     getFeedData()
@@ -44,10 +56,13 @@ function App() {
           </AppBar>
           <Grid container spacing={1}>
             <Grid item xs={4}>
-              <FeedList feedsStatus={feedsStatus}></FeedList>
+              <FeedList
+                feedsStatus={feedsStatus}
+                handleFeedSelect={handleFeedSelect}
+              ></FeedList>
             </Grid>
             <Grid item xs={8}>
-              <Item>xs=8</Item>
+              <ItemList itemsStatus={itemsStatus}></ItemList>
             </Grid>
           </Grid>
         </Box>
