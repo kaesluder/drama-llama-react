@@ -6,10 +6,11 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import BeenhereIcon from '@mui/icons-material/Beenhere';
+import ArticleIcon from '@mui/icons-material/Article';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import * as R from 'ramda';
-
 import { DateTime } from 'luxon';
 
 const Item = function (props) {
@@ -20,6 +21,16 @@ const Item = function (props) {
     return <Chip label={result['tag']} key={result['tag']}></Chip>;
   });
 
+  const readStyle = props.itemData['dl_read'] ? { color: 'text.disabled' } : {};
+
+  const readIcon = function () {
+    if (props.itemData['dl_read']) {
+      return <BeenhereIcon sx={{ mr: 1 }} />;
+    } else {
+      return <ArticleIcon sx={{ mr: 1 }} />;
+    }
+  };
+
   return (
     <Paper sx={{ m: 1 }}>
       <Accordion>
@@ -27,7 +38,9 @@ const Item = function (props) {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
+          sx={readStyle}
         >
+          {readIcon()}
           <Stack>
             <div>
               <Typography>{props.itemData['title'] ?? 'no title'}</Typography>
