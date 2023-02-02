@@ -5,8 +5,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import Grid from '@mui/material/Grid';
-import { getFeedData, getEntriesForFeed } from './LlamaAPI';
+import { getFeedData, getEntriesForFeed, requestRefresh } from './LlamaAPI';
 import FeedList from './components/FeedList';
 import ItemList from './components/ItemList';
 
@@ -19,10 +20,34 @@ function App() {
   const handleFeedSelect = function (feedID) {
     setSelectedFeedStatus(feedID);
     console.log(`handleFeedSelect ${feedID}`);
-    getEntriesForFeed(feedID)
+    return getEntriesForFeed(feedID)
       .then((response) => setItemsStatus(response.data))
       .catch((response) =>
         setErrorStatus(`Error fetching items for ${feedID}: ${response}`)
+      );
+  };
+
+  const handleRefresh = function (event) {
+    console.log('handleRefresh');
+    return requestRefresh()
+      .then((response) => {
+        console.log('getFeedData');
+        return getFeedData();
+      })
+      .then((response) => {
+        console.log('setFeedsStatus');
+        return setFeedsStatus(response.data);
+      })
+      .then(() => {
+        console.log('getEntriesForFeed');
+        return getEntriesForFeed(selectedFeedStatus);
+      })
+      .then((response) => {
+        console.log('setItemsStatus');
+        setItemsStatus(response.data);
+      })
+      .catch((response) =>
+        setErrorStatus(`Error refreshing feeds: ${response}`)
       );
   };
 
@@ -49,9 +74,16 @@ function App() {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                News
-              </Typography>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="refresh"
+                sx={{ mr: 2 }}
+                onClick={handleRefresh}
+              >
+                <RefreshIcon />
+              </IconButton>
             </Toolbar>
           </AppBar>
           <Grid container spacing={1}>

@@ -10,4 +10,8 @@ const getEntriesForFeed = function (feedID) {
   return axios.get(`${API_URL}/${feedID}/entries`);
 };
 
-export { getFeedData, getEntriesForFeed };
+const requestRefresh = function () {
+  return axios.get(`${API_URL}/refresh`);
+};
+
+export { getFeedData, getEntriesForFeed, requestRefresh };
