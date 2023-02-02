@@ -59,6 +59,8 @@ function App() {
       .catch((response) => setErrorStatus(`Error fetching feeds: ${response}`));
   }, []);
 
+  // TODO: Add mark read button to toolbar.
+
   return (
     <div className="App">
       <header className="App-header">
@@ -82,7 +84,7 @@ function App() {
                 sx={{ mr: 2 }}
                 onClick={handleRefresh}
               >
-                <RefreshIcon />
+                <RefreshIcon /> <Typography>Refresh</Typography>
               </IconButton>
             </Toolbar>
           </AppBar>
