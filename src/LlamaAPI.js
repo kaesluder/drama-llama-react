@@ -14,4 +14,8 @@ const requestRefresh = function () {
   return axios.get(`${API_URL}/refresh`);
 };
 
-export { getFeedData, getEntriesForFeed, requestRefresh };
+const markFeedRead = function (feedID) {
+  return axios.patch(`${API_URL}/${feedID}/read`);
+};
+
+export { getFeedData, getEntriesForFeed, requestRefresh, markFeedRead };

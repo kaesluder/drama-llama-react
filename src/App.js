@@ -4,10 +4,16 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import BeenhereIcon from '@mui/icons-material/Beenhere';
 import MenuIcon from '@mui/icons-material/Menu';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import Grid from '@mui/material/Grid';
-import { getFeedData, getEntriesForFeed, requestRefresh } from './LlamaAPI';
+import {
+  getFeedData,
+  getEntriesForFeed,
+  requestRefresh,
+  markFeedRead,
+} from './LlamaAPI';
 import FeedList from './components/FeedList';
 import ItemList from './components/ItemList';
 
@@ -51,6 +57,13 @@ function App() {
       );
   };
 
+  const handleMarkFeedRead = function (event) {
+    console.log('handleMarkFeedRead');
+    return markFeedRead(selectedFeedStatus).then((response) =>
+      setItemsStatus(response.data)
+    );
+  };
+
   useEffect(() => {
     getFeedData()
       .then((response) => {
@@ -85,6 +98,17 @@ function App() {
                 onClick={handleRefresh}
               >
                 <RefreshIcon /> <Typography>Refresh</Typography>
+              </IconButton>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="refresh"
+                sx={{ mr: 2 }}
+                onClick={handleMarkFeedRead}
+              >
+                <BeenhereIcon />
+                <Typography>Mark Read</Typography>
               </IconButton>
             </Toolbar>
           </AppBar>
