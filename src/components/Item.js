@@ -10,8 +10,10 @@ import BeenhereIcon from '@mui/icons-material/Beenhere';
 import ArticleIcon from '@mui/icons-material/Article';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import * as DOMPurify from 'dompurify';
 import * as R from 'ramda';
 import { DateTime } from 'luxon';
+import './Item.css';
 
 const Item = function (props) {
   const convertParsedDate = (parsedDate) =>
@@ -22,6 +24,10 @@ const Item = function (props) {
   });
 
   const readStyle = props.itemData['dl_read'] ? { color: 'text.disabled' } : {};
+
+  const clean_summary = DOMPurify.sanitize(
+    props.itemData['summary'] ?? 'no summary'
+  );
 
   const readIcon = function () {
     if (props.itemData['dl_read']) {
@@ -54,7 +60,13 @@ const Item = function (props) {
           </Stack>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>{props.itemData['summary'] ?? 'no summary'}</Typography>
+          <Box>
+            <div
+              sx={{ width: 1 }}
+              className="itemSummary"
+              dangerouslySetInnerHTML={{ __html: clean_summary }}
+            />
+          </Box>
         </AccordionDetails>
       </Accordion>
     </Paper>
