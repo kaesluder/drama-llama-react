@@ -7,21 +7,25 @@ import IconButton from '@mui/material/IconButton';
 import BeenhereIcon from '@mui/icons-material/Beenhere';
 import MenuIcon from '@mui/icons-material/Menu';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import Grid from '@mui/material/Grid';
 import {
   getFeedData,
   getEntriesForFeed,
   requestRefresh,
   markFeedRead,
+  addFeed,
 } from './LlamaAPI';
 import FeedList from './components/FeedList';
 import ItemList from './components/ItemList';
+import DialogAddFeed from './components/DialogAddFeed';
 
 function App() {
   const [feedsStatus, setFeedsStatus] = useState([]);
   const [errorStatus, setErrorStatus] = useState();
   const [itemsStatus, setItemsStatus] = useState([]);
   const [selectedFeedStatus, setSelectedFeedStatus] = useState();
+  const [addFeedOpen, setAddFeedOpen] = useState(false);
 
   const handleFeedSelect = function (feedID) {
     setSelectedFeedStatus(feedID);
@@ -31,6 +35,26 @@ function App() {
       .catch((response) =>
         setErrorStatus(`Error fetching items for ${feedID}: ${response}`)
       );
+  };
+
+  const handleAddFeed = function (sourceURL) {
+    return addFeed(sourceURL)
+      .then((response) => {
+        return getFeedData();
+      })
+      .then((response) => {
+        return setFeedsStatus(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          setErrorStatus(error.response.data.message);
+        }
+      });
   };
 
   const handleRefresh = function (event) {
@@ -62,6 +86,10 @@ function App() {
     return markFeedRead(selectedFeedStatus).then((response) =>
       setItemsStatus(response.data)
     );
+  };
+
+  const toggleAddFeedOpen = function (event) {
+    setAddFeedOpen((curr) => !curr);
   };
 
   useEffect(() => {
@@ -108,6 +136,17 @@ function App() {
                 <BeenhereIcon />
                 <Typography>Mark Read</Typography>
               </IconButton>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="refresh"
+                sx={{ mr: 2 }}
+                onClick={toggleAddFeedOpen}
+              >
+                <LibraryAddIcon />
+                <Typography>Add Feed</Typography>
+              </IconButton>
             </Toolbar>
           </AppBar>
           <Grid container spacing={1}>
@@ -121,6 +160,11 @@ function App() {
               <ItemList itemsStatus={itemsStatus}></ItemList>
             </Grid>
           </Grid>
+          <DialogAddFeed
+            open={addFeedOpen}
+            toggleAddFeedOpen={toggleAddFeedOpen}
+            handleAddFeed={handleAddFeed}
+          />
         </Box>
       </header>
     </div>

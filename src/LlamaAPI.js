@@ -18,4 +18,15 @@ const markFeedRead = function (feedID) {
   return axios.patch(`${API_URL}/${feedID}/read`);
 };
 
-export { getFeedData, getEntriesForFeed, requestRefresh, markFeedRead };
+const addFeed = function (sourceURL) {
+  const formData = { feed_source: sourceURL };
+  return axios.post(`${API_URL}/feeds/add`, formData);
+};
+
+export {
+  getFeedData,
+  getEntriesForFeed,
+  requestRefresh,
+  markFeedRead,
+  addFeed,
+};
