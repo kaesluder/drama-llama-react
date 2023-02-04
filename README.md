@@ -23,7 +23,7 @@ This is my final project for [Ada Developers Academy](https://adadevelopersacade
 5.  Filter wizard
     - Drama Llama can suggest filters based on common patterns.
 
-This project is _not_ at all usable at this point. Currently it consists of a separate react GUI (this repo) and a separate [python server](https://github.com/kaesluder/drama-llama-py) that will be integrated into a single desktop app eventually.
+This project is _not_ at all usable at this point. Currently it consists of a react GUI (this repo) and a separate [python server](https://github.com/kaesluder/drama-llama-py) that will be integrated into a single desktop app eventually.
 
 ### Experimental Run Instructions
 
