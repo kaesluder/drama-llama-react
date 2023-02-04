@@ -9,6 +9,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import Grid from '@mui/material/Grid';
+import { useSnackbar } from 'notistack';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Snackbar';
+
 import {
   getFeedData,
   getEntriesForFeed,
@@ -19,6 +23,7 @@ import {
 import FeedList from './components/FeedList';
 import ItemList from './components/ItemList';
 import DialogAddFeed from './components/DialogAddFeed';
+import ErrorSnackbar from './components/ErrorSnackbar';
 
 function App() {
   const [feedsStatus, setFeedsStatus] = useState([]);
@@ -26,6 +31,11 @@ function App() {
   const [itemsStatus, setItemsStatus] = useState([]);
   const [selectedFeedStatus, setSelectedFeedStatus] = useState();
   const [addFeedOpen, setAddFeedOpen] = useState(false);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  const clearErrorStatus = function () {
+    setErrorStatus(null);
+  };
 
   const handleFeedSelect = function (feedID) {
     setSelectedFeedStatus(feedID);
@@ -52,7 +62,10 @@ function App() {
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
-          setErrorStatus(error.response.data.message);
+          enqueueSnackbar(
+            `Error fetching feed from: ${sourceURL}. Error: ${error.response.data.exception}`,
+            { variant: 'warning' }
+          );
         }
       });
   };
