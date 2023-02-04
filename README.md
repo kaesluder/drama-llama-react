@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Drama Llama
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## An experiment in feed reading and natural language processing.
 
-## Available Scripts
+### Project Background and Status
 
-In the project directory, you can run:
+**This is a code bootcamp project in-progress!**
 
-### `yarn start`
+This is my final project for [Ada Developers Academy](https://adadevelopersacademy.org/). You can check out the [project prospectus](https://kaesluder.github.io/kae-garden-wiki/Ada_Capstone_Documentation/drama_llama_draft_2022-12-11/) for full details. Current goals are:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1.  RSS fetching and viewing _(80% complete)_
+    - RSS is an XML standard for providing website, article, and post summaries.
+      While many sites have moved away from RSS, it's still widely used.
+2.  Keyword or regex tagging
+    - Simple search on feed content.
+3.  Natural Language Processing (NLP) tags
+    - The first prototype will use very basic NLP algorithms such as Sentiment
+      Analysis, Naive Bayesian Analysis, and/or Logistic Regression to tag text.
+      These filters can be trained via user curation, and offer reasonable
+      accuracy without extensive machine learning.
+4.  Desktop app or desktop browser app
+    - I think this will be challenging enough without trying to adapt to small-screen controls.
+5.  Filter wizard
+    - Drama Llama can suggest filters based on common patterns.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+This project is _not_ at all usable at this point. Currently it consists of a separate react front end (this repo) and a separate [python back-end](https://github.com/kaesluder/drama-llama-py) that will be integrated into a single desktop app eventually.
 
-### `yarn test`
+### Experimental Run Instructions
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```sh
+git clone https://github.com/kaesluder/drama-llama-react
+cd drama-llama-react
+yarn
+yarn start # start the react interface on a simple web server.
+```
 
-### `yarn build`
+**You will also need the [python back-end](https://github.com/kaesluder/drama-llama-py)**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+In a separate shell. For bash or zsh:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```sh
+git clone https://github.com/kaesluder/drama-llama-py
+cd drama-llama-py
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+flask run
+```
