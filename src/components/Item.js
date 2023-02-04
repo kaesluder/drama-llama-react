@@ -1,10 +1,11 @@
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import BeenhereIcon from '@mui/icons-material/Beenhere';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -37,6 +38,10 @@ const Item = function (props) {
     }
   };
 
+  const formattedAuthor = props.itemData['author']
+    ? `Author: ${props.itemData['author']}`
+    : '';
+
   return (
     <Paper sx={{ m: 1 }}>
       <Accordion>
@@ -57,6 +62,17 @@ const Item = function (props) {
               ></Chip>
               {tagList}
             </div>
+            <Divider variant="inset" sx={{ m: 1 }} />
+            <div>
+              <Link
+                href={props.itemData['link'] ?? ''}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {new URL(props.itemData['link'] ?? '').hostname}
+              </Link>
+            </div>
+            <div>{formattedAuthor}</div>
           </Stack>
         </AccordionSummary>
         <AccordionDetails>
