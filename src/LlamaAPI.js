@@ -23,10 +23,20 @@ const addFeed = function (sourceURL) {
   return axios.post(`${API_URL}/feeds/add`, formData);
 };
 
+const preDeleteFeed = function (feed_id) {
+  return axios.get(`${API_URL}/feeds/${feed_id}/predelete`);
+};
+
+const deleteFeed = function (feed_id) {
+  return axios.delete(`${API_URL}/feeds/${feed_id}/delete`);
+};
+
 export {
   getFeedData,
   getEntriesForFeed,
   requestRefresh,
   markFeedRead,
   addFeed,
+  preDeleteFeed,
+  deleteFeed,
 };

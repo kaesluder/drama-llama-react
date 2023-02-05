@@ -19,11 +19,15 @@ import {
   requestRefresh,
   markFeedRead,
   addFeed,
+  preDeleteFeed,
+  deleteFeed,
 } from './LlamaAPI';
+
 import FeedList from './components/FeedList';
 import ItemList from './components/ItemList';
 import DialogAddFeed from './components/DialogAddFeed';
 import ErrorSnackbar from './components/ErrorSnackbar';
+import DialogPreDelete from './components/DialogPreDelete';
 
 function App() {
   const [feedsStatus, setFeedsStatus] = useState([]);
@@ -31,6 +35,9 @@ function App() {
   const [itemsStatus, setItemsStatus] = useState([]);
   const [selectedFeedStatus, setSelectedFeedStatus] = useState();
   const [addFeedOpen, setAddFeedOpen] = useState(false);
+  const [deleteFeedOpen, setDeleteFeedOpen] = useState(false);
+  const [deleteFeedID, setDeleteFeedID] = useState();
+  const [deleteCount, setDeleteCount] = useState();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const clearErrorStatus = function () {
@@ -101,8 +108,34 @@ function App() {
     );
   };
 
+  const handlePreDelete = function (feed_id) {
+    console.log(`handlePreDelete ${feed_id}`);
+    return preDeleteFeed(feed_id)
+      .then((response) => {
+        setDeleteCount(response.data['item_count']);
+        setDeleteFeedID(feed_id);
+        toggleDeleteFeedOpen();
+      })
+      .catch((error) =>
+        enqueueSnackbar(`Error with pre-delete: ${error.response}`)
+      );
+  };
+
+  const handleDelete = function (feed_id) {
+    console.log(`handleDelete ${feed_id}`);
+    return deleteFeed(feed_id)
+      .then((response) => setFeedsStatus(response.data))
+      .catch((error) =>
+        enqueueSnackbar(`Error with pre-delete: ${error.response}`)
+      );
+  };
+
   const toggleAddFeedOpen = function (event) {
     setAddFeedOpen((curr) => !curr);
+  };
+
+  const toggleDeleteFeedOpen = function (event) {
+    setDeleteFeedOpen((curr) => !curr);
   };
 
   useEffect(() => {
@@ -113,7 +146,7 @@ function App() {
       .catch((error) =>
         enqueueSnackbar(`Error fetching feeds: ${error.response}`)
       );
-  }, []);
+  }, [enqueueSnackbar]);
 
   return (
     <div className="App">
@@ -169,6 +202,7 @@ function App() {
               <FeedList
                 feedsStatus={feedsStatus}
                 handleFeedSelect={handleFeedSelect}
+                handlePreDelete={handlePreDelete}
               ></FeedList>
             </Grid>
             <Grid item xs={8}>
@@ -179,6 +213,13 @@ function App() {
             open={addFeedOpen}
             toggleAddFeedOpen={toggleAddFeedOpen}
             handleAddFeed={handleAddFeed}
+          />
+          <DialogPreDelete
+            open={deleteFeedOpen}
+            toggleDeleteFeedOpen={toggleDeleteFeedOpen}
+            deleteFeedID={deleteFeedID}
+            deleteCount={deleteCount}
+            handleDelete={handleDelete}
           />
         </Box>
       </header>
