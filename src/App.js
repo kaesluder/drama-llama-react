@@ -42,8 +42,8 @@ function App() {
     console.log(`handleFeedSelect ${feedID}`);
     return getEntriesForFeed(feedID)
       .then((response) => setItemsStatus(response.data))
-      .catch((response) =>
-        setErrorStatus(`Error fetching items for ${feedID}: ${response}`)
+      .catch((error) =>
+        enqueueSnackbar(`Error fetching items for ${feedID}: ${error.response}`)
       );
   };
 
@@ -89,8 +89,8 @@ function App() {
         console.log('setItemsStatus');
         setItemsStatus(response.data);
       })
-      .catch((response) =>
-        setErrorStatus(`Error refreshing feeds: ${response}`)
+      .catch((error) =>
+        enqueueSnackbar(`Error refreshing feeds: ${error.response}`)
       );
   };
 
@@ -110,7 +110,9 @@ function App() {
       .then((response) => {
         setFeedsStatus(response.data);
       })
-      .catch((response) => setErrorStatus(`Error fetching feeds: ${response}`));
+      .catch((error) =>
+        enqueueSnackbar(`Error fetching feeds: ${error.response}`)
+      );
   }, []);
 
   return (
