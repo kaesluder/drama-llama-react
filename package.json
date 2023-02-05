@@ -2,6 +2,7 @@
   "name": "drama-llama-react",
   "version": "0.1.0",
   "private": true,
+  "main": "public/electron.js",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -15,6 +16,7 @@
     "add": "^2.0.6",
     "axios": "^1.2.6",
     "dompurify": "^2.4.3",
+    "electron-is-dev": "^2.0.0",
     "luxon": "^3.2.1",
     "notistack": "^1.0.10",
     "ramda": "^0.28.0",
@@ -28,13 +30,18 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "sh ./wait-on.sh",
+    "electron": "electron ."
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
+  },
+  "jest": {
+    "transformIgnorePatterns": ["node_modules/(?!axios)"]
   },
   "browserslist": {
     "production": [
@@ -47,5 +54,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "electron": "^22.2.0",
+    "wait-on": "^7.0.1"
   }
 }
