@@ -17,15 +17,23 @@ import { DateTime } from 'luxon';
 import './Item.css';
 
 const Item = function (props) {
+  /**
+   * Convert an parsed unix timestamp into a locale string.
+   * @param {int} parsedDate
+   * @returns {string} locale-formatted date string.
+   */
   const convertParsedDate = (parsedDate) =>
     DateTime.fromSeconds(parsedDate).toLocaleString();
 
+  // list of tags for each item
   const tagList = props.itemData['filter_results'].map((result) => {
     return <Chip label={result['tag']} key={result['tag']}></Chip>;
   });
 
+  // style used for read items
   const readStyle = props.itemData['dl_read'] ? { color: 'text.disabled' } : {};
 
+  // sanitized version of summary
   const clean_summary = DOMPurify.sanitize(
     props.itemData['summary'] ?? 'no summary'
   );
@@ -38,6 +46,7 @@ const Item = function (props) {
     }
   };
 
+  // formatted author line if author is present, empty string otherwise
   const formattedAuthor = props.itemData['author']
     ? `Author: ${props.itemData['author']}`
     : '';
