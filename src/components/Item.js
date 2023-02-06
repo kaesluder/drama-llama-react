@@ -25,11 +25,15 @@ const Item = function (props) {
   const convertParsedDate = (parsedDate) =>
     DateTime.fromSeconds(parsedDate).toLocaleString();
 
-  // list of tags for each item
-  const tagList = props.itemData['filter_results'].map((result) => {
-    return <Chip label={result['tag']} key={result['tag']}></Chip>;
-  });
+  const chipLabel = (result) => (
+    <Chip label={result['tag']} key={result['tag']}></Chip>
+  );
 
+  // list of tags for each item
+  const tagList = R.pipe(
+    R.filter(R.prop('result')),
+    R.map(chipLabel)
+  )(props.itemData['filter_results']);
   // style used for read items
   const readStyle = props.itemData['dl_read'] ? { color: 'text.disabled' } : {};
 
