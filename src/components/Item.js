@@ -34,6 +34,7 @@ const Item = function (props) {
     R.filter(R.prop('result')),
     R.map(chipLabel)
   )(props.itemData['filter_results']);
+
   // style used for read items
   const readStyle = props.itemData['dl_read'] ? { color: 'text.disabled' } : {};
 
