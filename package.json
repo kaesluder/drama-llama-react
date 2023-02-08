@@ -2,6 +2,7 @@
   "name": "drama-llama-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "main": "public/electron.js",
   "dependencies": {
     "@emotion/react": "^11.10.5",
