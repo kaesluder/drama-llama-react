@@ -27,12 +27,14 @@
     "yarn": "^1.22.19"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "electron-forge start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "sh ./wait-on.sh",
-    "electron": "electron ."
+    "electron": "electron .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "eslintConfig": {
     "extends": [
@@ -41,7 +43,9 @@
     ]
   },
   "jest": {
-    "transformIgnorePatterns": ["node_modules/(?!axios)"]
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)"
+    ]
   },
   "browserslist": {
     "production": [
@@ -56,8 +60,10 @@
     ]
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.5",
     "concurrently": "^7.6.0",
-    "electron": "^22.2.0",
-    "wait-on": "^7.0.1"
+    "electron-forge": "^5.2.4",
+    "wait-on": "^7.0.1",
+    "electron-prebuilt-compile": "22.2.0"
   }
 }
