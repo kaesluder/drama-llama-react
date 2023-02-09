@@ -198,14 +198,16 @@ function App() {
             </Toolbar>
           </AppBar>
           <Grid container spacing={1}>
-            <Grid item xs={4}>
-              <FeedList
-                feedsStatus={feedsStatus}
-                handleFeedSelect={handleFeedSelect}
-                handlePreDelete={handlePreDelete}
-              ></FeedList>
+            <Grid item xs="3">
+              <Box>
+                <FeedList
+                  feedsStatus={feedsStatus}
+                  handleFeedSelect={handleFeedSelect}
+                  handlePreDelete={handlePreDelete}
+                ></FeedList>
+              </Box>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs="9">
               <ItemList itemsStatus={itemsStatus}></ItemList>
             </Grid>
           </Grid>

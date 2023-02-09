@@ -26,7 +26,9 @@ const ItemList = function (props) {
     return <Item itemData={item} key={item.id}></Item>;
   });
 
-  return <Box>{renderedList}</Box>;
+  return (
+    <Box sx={{ height: 'max-content', overflow: 'auto' }}>{renderedList}</Box>
+  );
 };
 
 export default ItemList;
