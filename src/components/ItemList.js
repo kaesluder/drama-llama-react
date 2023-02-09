@@ -5,10 +5,16 @@ import { useEffect } from 'react';
 
 const sortByDate = R.compose(R.reverse, R.sortBy(R.prop('published_parsed')));
 
+/**
+ * Render a list of items.
+ * @param {Object} props
+ * @returns {JSX.Element} Rendered list
+ */
 const ItemList = function (props) {
   useEffect(() => {
     /* Unorthodox for React, but ensure that clicked links open 
-  in a browser window rather than the app window. */
+  in a browser window rather than the app window.
+  Recipe from: https://www.geeksforgeeks.org/how-to-simulate-target_blank-in-javascript/ */
     document.addEventListener('click', function (e) {
       if (e.target.tagName === 'A' && !e.target.hasAttribute('target')) {
         e.target.setAttribute('target', '_blank');

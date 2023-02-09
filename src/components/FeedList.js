@@ -9,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import RssFeed from '@mui/icons-material/RssFeed';
 
 /**
- * React component for handling individual items.
+ * React component for handling individual Feeds.
  * @param {Object} props
  *
  * @property {Object} feed  item data object

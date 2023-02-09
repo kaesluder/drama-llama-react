@@ -16,6 +16,11 @@ import * as R from 'ramda';
 import { DateTime } from 'luxon';
 import './Item.css';
 
+/**
+ * Renders a single item.
+ * @param {Object} props
+ * @returns {JSX.Element} rendered item
+ */
 const Item = function (props) {
   /**
    * Convert an parsed unix timestamp into a locale string.
