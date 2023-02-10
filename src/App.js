@@ -27,7 +27,6 @@ import {
 import FeedList from './components/FeedList';
 import ItemList from './components/ItemList';
 import DialogAddFeed from './components/DialogAddFeed';
-import ErrorSnackbar from './components/ErrorSnackbar';
 import DialogPreDelete from './components/DialogPreDelete';
 import DialogFilters from './components/DialogFilters';
 

@@ -29,6 +29,33 @@ export default function DialogFilters(props) {
     type: 'RegexFilter',
   };
 
+  const [errorState, setErrorState] = useState({});
+
+  const validateRegex = function (regStr) {
+    try {
+      new RegExp(regStr);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const validateFields = {
+    type: (v) => R.find(R.equals(v))(['RegexFilter', 'BaseFilter']),
+    id: (v) => v.length > 3,
+    tag: (v) => v.length > 0,
+    regex: (v) => validateRegex(v),
+  };
+
+  const helperTexts = {
+    type: 'Only RegexFilter and BaseFilter are supported.',
+    id: 'ID must be longer than 3 characters.',
+    tag: "Tag can't be empty.",
+    regex: 'Must be a valid regular expression.',
+  };
+
+  const [submitDisabled, setSubmitDisabled] = useState(true);
+
   const [formData, setFormData] = useState(kDefaultFields);
 
   const handleListItemClick = (event, index) => {
@@ -70,6 +97,8 @@ export default function DialogFilters(props) {
     return (
       <div key={fieldName}>
         <TextField
+          helperText={helperTexts[fieldName]}
+          error={errorState[fieldName]}
           sx={{ m: 0.5 }}
           id={fieldName}
           label={fieldName}
@@ -82,8 +111,33 @@ export default function DialogFilters(props) {
     );
   };
 
+  const missingFormData = function () {
+    for (let key in validateFields) {
+      if (!validateFields[key](formData[key])) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   const handleChange = function (event) {
-    setFormData(R.assoc(event.target.id, event.target.value));
+    const id = event.target.id;
+    const value = event.target.value;
+
+    setFormData(R.assoc(id, value));
+    if (validateFields[id]) {
+      setErrorState(R.assoc(id, !Boolean(validateFields[id](value))));
+      setSubmitDisabled(!Boolean(validateFields[id](value)));
+    }
+
+    if (missingFormData()) {
+      setSubmitDisabled(true);
+    } else {
+      setSubmitDisabled(false);
+    }
+
+    console.log(missingFormData());
   };
 
   const handleCancel = function (event) {
@@ -109,7 +163,9 @@ export default function DialogFilters(props) {
           <Grid item xs={9}>
             {formFields}
             <Button onClick={handleCancel}>Cancel</Button>
-            <Button onClick={handleSubmit}>Submit</Button>
+            <Button disabled={submitDisabled} onClick={handleSubmit}>
+              Submit
+            </Button>
           </Grid>
         </Grid>
       </DialogContent>
