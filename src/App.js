@@ -11,6 +11,7 @@ import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import Grid from '@mui/material/Grid';
 import { useSnackbar } from 'notistack';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import './App.css';
 
 import {
   getFeedData,
@@ -162,6 +163,8 @@ function App() {
       );
   }, [enqueueSnackbar]);
 
+  const scrollStyle = { overflowY: 'auto' };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -233,7 +236,9 @@ function App() {
               </Box>
             </Grid>
             <Grid item xs={9}>
-              <ItemList itemsStatus={itemsStatus}></ItemList>
+              <div className={'articles'}>
+                <ItemList itemsStatus={itemsStatus}></ItemList>
+              </div>
             </Grid>
           </Grid>
           <DialogAddFeed
