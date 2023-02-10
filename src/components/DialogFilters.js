@@ -12,7 +12,6 @@ import * as R from 'ramda';
 
 export default function DialogFilters(props) {
   // TODO: Tooltips and figure out what I'm going to do with filter type.
-  // TODO: Toggle form function.
   // USABILITY: Yeeeeeeesh. Barely functional.
 
   const [selectedIndex, setSelectedIndex] = useState();
