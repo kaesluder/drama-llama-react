@@ -31,6 +31,10 @@ const deleteFeed = function (feed_id) {
   return axios.delete(`${API_URL}/feeds/${feed_id}/delete`);
 };
 
+const getFilters = function () {
+  return axios.get(`${API_URL}/filters`);
+};
+
 export {
   getFeedData,
   getEntriesForFeed,
@@ -39,4 +43,5 @@ export {
   addFeed,
   preDeleteFeed,
   deleteFeed,
+  getFilters,
 };

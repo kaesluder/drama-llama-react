@@ -10,8 +10,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import Grid from '@mui/material/Grid';
 import { useSnackbar } from 'notistack';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Snackbar';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 import {
   getFeedData,
@@ -21,6 +20,7 @@ import {
   addFeed,
   preDeleteFeed,
   deleteFeed,
+  getFilters,
 } from './LlamaAPI';
 
 import FeedList from './components/FeedList';
@@ -28,6 +28,7 @@ import ItemList from './components/ItemList';
 import DialogAddFeed from './components/DialogAddFeed';
 import ErrorSnackbar from './components/ErrorSnackbar';
 import DialogPreDelete from './components/DialogPreDelete';
+import DialogFilters from './components/DialogFilters';
 
 function App() {
   const [feedsStatus, setFeedsStatus] = useState([]);
@@ -38,6 +39,8 @@ function App() {
   const [deleteFeedOpen, setDeleteFeedOpen] = useState(false);
   const [deleteFeedID, setDeleteFeedID] = useState();
   const [deleteCount, setDeleteCount] = useState();
+  const [filterDialogOpen, setFilterDialogOpen] = useState(true);
+  const [filterList, setFilterList] = useState();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const clearErrorStatus = function () {
@@ -75,6 +78,10 @@ function App() {
           );
         }
       });
+  };
+
+  const handleAddFilter = function (formData) {
+    console.log(`handleAddFilter: ${JSON.stringify(formData)}`);
   };
 
   const handleRefresh = function (event) {
@@ -130,6 +137,7 @@ function App() {
       );
   };
 
+  // REFACTOR
   const toggleAddFeedOpen = function (event) {
     setAddFeedOpen((curr) => !curr);
   };
@@ -138,11 +146,17 @@ function App() {
     setDeleteFeedOpen((curr) => !curr);
   };
 
+  const toggleFilterDialogOpen = function (event) {
+    setFilterDialogOpen((curr) => !curr);
+  };
+
   useEffect(() => {
     getFeedData()
       .then((response) => {
         setFeedsStatus(response.data);
       })
+      .then(() => getFilters())
+      .then((response) => setFilterList(response.data))
       .catch((error) =>
         enqueueSnackbar(`Error fetching feeds: ${error.response}`)
       );
@@ -195,10 +209,21 @@ function App() {
                 <LibraryAddIcon />
                 <Typography>Add Feed</Typography>
               </IconButton>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="refresh"
+                sx={{ mr: 2 }}
+                onClick={toggleFilterDialogOpen}
+              >
+                <FilterListIcon />
+                <Typography>Add/Edit Filters</Typography>
+              </IconButton>
             </Toolbar>
           </AppBar>
           <Grid container spacing={1}>
-            <Grid item xs="3">
+            <Grid item xs={3}>
               <Box>
                 <FeedList
                   feedsStatus={feedsStatus}
@@ -207,7 +232,7 @@ function App() {
                 ></FeedList>
               </Box>
             </Grid>
-            <Grid item xs="9">
+            <Grid item xs={9}>
               <ItemList itemsStatus={itemsStatus}></ItemList>
             </Grid>
           </Grid>
@@ -223,6 +248,12 @@ function App() {
             deleteCount={deleteCount}
             handleDelete={handleDelete}
           />
+          <DialogFilters
+            filterDialogOpen={filterDialogOpen}
+            filterList={filterList}
+            handleAddFilter={handleAddFilter}
+            toggleFilterDialogOpen={toggleFilterDialogOpen}
+          ></DialogFilters>
         </Box>
       </header>
     </div>
