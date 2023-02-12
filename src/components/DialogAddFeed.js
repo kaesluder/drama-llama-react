@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PropTypes } from 'prop-types';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -48,3 +49,8 @@ export default function DialogAddFeed(props) {
     </div>
   );
 }
+
+DialogAddFeed.propTypes = {
+  handleAddFeed: PropTypes.func,
+  toggleAddFeedOpen: PropTypes.func,
+};

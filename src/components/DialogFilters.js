@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -223,3 +224,9 @@ export default function DialogFilters(props) {
     </Dialog>
   );
 }
+
+DialogFilters.propTypes = {
+  filterList: PropTypes.array,
+  toggleFilterDialogOpen: PropTypes.func,
+  handleAddFilter: PropTypes.func,
+};

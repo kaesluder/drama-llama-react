@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -31,3 +31,11 @@ export default function DialogPreDelete(props) {
     </div>
   );
 }
+
+DialogPreDelete.propTypes = {
+  handleDelete: PropTypes.func(),
+  toggleDeleteFeedOpen: PropTypes.func(),
+  open: PropTypes.bool(),
+  deleteFeedID: PropTypes.string(),
+  deleteCount: PropTypes.number(),
+};
