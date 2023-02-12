@@ -35,6 +35,10 @@ const getFilters = function () {
   return axios.get(`${API_URL}/filters`);
 };
 
+const addFilter = function (filterSpec) {
+  return axios.post(`${API_URL}/filters/add`, filterSpec);
+};
+
 export {
   getFeedData,
   getEntriesForFeed,
@@ -44,4 +48,5 @@ export {
   preDeleteFeed,
   deleteFeed,
   getFilters,
+  addFilter,
 };

@@ -22,6 +22,7 @@ import {
   preDeleteFeed,
   deleteFeed,
   getFilters,
+  addFilter,
 } from './LlamaAPI';
 
 import FeedList from './components/FeedList';
@@ -32,20 +33,15 @@ import DialogFilters from './components/DialogFilters';
 
 function App() {
   const [feedsStatus, setFeedsStatus] = useState([]);
-  const [errorStatus, setErrorStatus] = useState();
   const [itemsStatus, setItemsStatus] = useState([]);
   const [selectedFeedStatus, setSelectedFeedStatus] = useState();
   const [addFeedOpen, setAddFeedOpen] = useState(false);
   const [deleteFeedOpen, setDeleteFeedOpen] = useState(false);
   const [deleteFeedID, setDeleteFeedID] = useState();
   const [deleteCount, setDeleteCount] = useState();
-  const [filterDialogOpen, setFilterDialogOpen] = useState(true);
+  const [filterDialogOpen, setFilterDialogOpen] = useState(false);
   const [filterList, setFilterList] = useState();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-  const clearErrorStatus = function () {
-    setErrorStatus(null);
-  };
 
   const handleFeedSelect = function (feedID) {
     setSelectedFeedStatus(feedID);
@@ -82,6 +78,11 @@ function App() {
 
   const handleAddFilter = function (formData) {
     console.log(`handleAddFilter: ${JSON.stringify(formData)}`);
+    return addFilter(formData)
+      .then((response) => setFilterList(response.data))
+      .catch((error) =>
+        enqueueSnackbar(`Error fetching filters: ${error.response}`)
+      );
   };
 
   const handleRefresh = function (event) {
@@ -161,8 +162,6 @@ function App() {
         enqueueSnackbar(`Error fetching feeds: ${error.response}`)
       );
   }, [enqueueSnackbar]);
-
-  const scrollStyle = { overflowY: 'auto' };
 
   return (
     <div className="App">
