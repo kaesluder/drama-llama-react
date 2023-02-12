@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Accordion from '@mui/material/Accordion';
@@ -109,3 +110,7 @@ const Item = function (props) {
 };
 
 export default Item;
+
+Item.propTypes = {
+  itemData: PropTypes.object,
+};

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Item from './Item';
 import * as R from 'ramda';
@@ -29,6 +30,10 @@ const ItemList = function (props) {
   return (
     <Box sx={{ height: 'max-content', overflow: 'auto' }}>{renderedList}</Box>
   );
+};
+
+ItemList.propTypes = {
+  itemsStatus: PropTypes.array,
 };
 
 export default ItemList;

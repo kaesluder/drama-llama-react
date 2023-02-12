@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
 import List from '@mui/material/List';
@@ -67,6 +68,17 @@ const FeedList = function (props) {
   });
 
   return <List>{feeds}</List>;
+};
+
+FeedList.propTypes = {
+  handlePreDelete: PropTypes.func,
+  handleSelect: PropTypes.func,
+  feedsStatus: PropTypes.array,
+};
+
+ListItem.propTypes = {
+  handleSelect: PropTypes.func,
+  feed: PropTypes.object,
 };
 
 export default FeedList;
