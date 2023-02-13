@@ -226,6 +226,7 @@ export default function DialogFilters(props) {
 }
 
 DialogFilters.propTypes = {
+  filterDialogOpen: PropTypes.bool,
   filterList: PropTypes.array,
   toggleFilterDialogOpen: PropTypes.func,
   handleAddFilter: PropTypes.func,
