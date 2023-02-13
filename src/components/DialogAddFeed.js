@@ -51,6 +51,7 @@ export default function DialogAddFeed(props) {
 }
 
 DialogAddFeed.propTypes = {
+  open: PropTypes.bool,
   handleAddFeed: PropTypes.func,
   toggleAddFeedOpen: PropTypes.func,
 };
